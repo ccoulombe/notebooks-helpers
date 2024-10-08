@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "notebooks-helpers"
+version = "0.1"
+requires-python = ">= 3.8"
+authors = [{name = "Charles Coulombe"},]
+maintainers = [{name = "Charles Coulombe"}]
+description = "Collection of tools to help in writting and managing Jupyter Notebooks"
+
+[project.scripts]
+participant_empty = "participant_empty:main"
