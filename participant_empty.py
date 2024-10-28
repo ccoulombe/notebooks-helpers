@@ -15,6 +15,7 @@ def create_parser():
     parser = argparse.ArgumentParser()
 
     parser.add_argument("FILES", nargs='+', type=argparse.FileType('r'))
+    parser.add_argument("-v", "--verbose", action="store_true", help="Be verbose about action")
 
     output_group = parser.add_argument_group('output')
     parser.add_mutually_exclusive_group()._group_actions.extend([
@@ -27,6 +28,8 @@ def create_parser():
 
 def main(args=create_parser().parse_args()):
     for file in args.FILES:
+        if args.verbose:
+            print(f'Processing: {file.name}')
         content = json.load(file)
 
         for cell in filter(to_empty, content['cells']):
@@ -40,6 +43,8 @@ def main(args=create_parser().parse_args()):
             outname = f"{os.path.basename(file.name)}.new"
 
         with open(outname, 'w', encoding="UTF-8") as out:
+            if args.verbose:
+                print(f'Writting to {outname}')
             json.dump(content, out, indent=1, ensure_ascii=False)
 
 
