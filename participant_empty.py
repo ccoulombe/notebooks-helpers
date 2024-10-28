@@ -4,10 +4,12 @@ import json
 import os
 import argparse
 
+
 def to_empty(cell):
     code_cell = cell['cell_type'] == 'code'
     to_empty = 'empty' in cell['metadata'].get('tags', [])
     return code_cell and to_empty
+
 
 def create_parser():
     parser = argparse.ArgumentParser()
@@ -22,22 +24,24 @@ def create_parser():
 
     return parser
 
+
 def main(args=create_parser().parse_args()):
     for file in args.FILES:
         content = json.load(file)
 
         for cell in filter(to_empty, content['cells']):
-                cell['source'] = []
+            cell['source'] = []
 
         if args.inplace:
             outname = file.name
         elif args.outputdir:
             outname = os.path.join(args.outputdir, os.path.basename(file.name))
-        else: # fallback to avoid erasing files in case we are in the directory
+        else:  # fallback to avoid erasing files in case we are in the directory
             outname = f"{os.path.basename(file.name)}.new"
 
         with open(outname, 'w', encoding="UTF-8") as out:
             json.dump(content, out, indent=1, ensure_ascii=False)
+
 
 if __name__ == '__main__':
     main(create_parser().parse_args())
