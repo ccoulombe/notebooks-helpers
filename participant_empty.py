@@ -16,8 +16,8 @@ def create_parser():
 
     output_group = parser.add_argument_group('output')
     parser.add_mutually_exclusive_group()._group_actions.extend([
-        parser.add_argument("-o", "--outputdir", help='Write stripped files to output directory'),
-        parser.add_argument("-i", "--inplace", action='store_true', help='Work in-place, modifying current file')
+        output_group.add_argument("-o", "--outputdir", help='Write stripped files to output directory'),
+        output_group.add_argument("-i", "--inplace", action='store_true', help='Work in-place, modifying current file')
     ])
 
     return parser
