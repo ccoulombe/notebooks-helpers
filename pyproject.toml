@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "notebooks-helpers"
-version = "0.1"
+version = "0.2"
 requires-python = ">= 3.8"
 authors = [{name = "Charles Coulombe"},]
 maintainers = [{name = "Charles Coulombe"}]
