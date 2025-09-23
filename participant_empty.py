@@ -22,6 +22,7 @@ def create_parser():
         output_group.add_argument("-o", "--outputdir", help='Write stripped files to output directory'),
         output_group.add_argument("-i", "--inplace", action='store_true', help='Work in-place, modifying current file')
     ])
+    parser.add_argument("-k", "--keep-comments", action='store_true', help='Keep comments in the code cells')
 
     return parser
 
@@ -33,7 +34,10 @@ def main(args=create_parser().parse_args()):
         content = json.load(file)
 
         for cell in filter(to_empty, content['cells']):
-            cell['source'] = []
+            if args.keep_comments:
+                cell['source'] = [line for line in cell['source'] if line.startswith('#') and not line.startswith('##')]
+            else:
+                cell['source'] = []
 
         if args.inplace:
             outname = file.name
