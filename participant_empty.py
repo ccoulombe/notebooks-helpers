@@ -6,7 +6,7 @@ import argparse
 
 
 def to_empty(cell):
-    code_cell = cell['cell_type'] == 'code'
+    code_cell = cell['cell_type'] in ('code', 'raw')
     to_empty = 'empty' in cell['metadata'].get('tags', [])
     return code_cell and to_empty
 
